@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Game Portfolio - Repositório de Projetos</title>
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      color: #fff;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    /* Login Screen */
+    .login-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .login-box {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      padding: 40px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      width: 100%;
+      max-width: 400px;
+    }
+
+    .login-box h1 {
+      text-align: center;
+      margin-bottom: 10px;
+      font-size: 2rem;
+    }
+
+    .login-box p {
+      text-align: center;
+      margin-bottom: 30px;
+      opacity: 0.8;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 500;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+      font-size: 16px;
+      transition: all 0.3s;
+    }
+
+    .form-group input:focus {
+      outline: none;
+      border-color: #fff;
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    .form-group input::placeholder {
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    .btn {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: #fff;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    .error-message {
+      background: rgba(239, 68, 68, 0.2);
+      border: 1px solid rgba(239, 68, 68, 0.5);
+      color: #fecaca;
+      padding: 10px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    /* Header */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 0;
+      margin-bottom: 30px;
+    }
+
+    .header h1 {
+      font-size: 2rem;
+    }
+
+    .header-right {
+      display: flex;
+      gap: 15px;
+      align-items: center;
+    }
+
+    .user-info {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 8px 15px;
+      border-radius: 20px;
+      font-size: 14px;
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.2);
+      color: #fff;
+      padding: 8px 20px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.3);
+    }
+
+    .btn-add {
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      color: #fff;
+      padding: 10px 25px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s;
+    }
+
+    .btn-add:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(16, 185, 129, 0.4);
+    }
+
+    /* Stats Bar */
+    .stats-bar {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+
+    .stat-card {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border-radius: 15px;
+      padding: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .stat-card h3 {
+      font-size: 14px;
+      opacity: 0.8;
+      margin-bottom: 10px;
+    }
+
+    .stat-card p {
+      font-size: 28px;
+      font-weight: 700;
+    }
+
+    /* Games Grid */
+    .games-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 25px;
+      margin-bottom: 40px;
+    }
+
+    .game-card {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border-radius: 15px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: all 0.3s;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .game-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    .game-image {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .game-content {
+      padding: 20px;
+    }
+
+    .game-title {
+      font-size: 1.3rem;
+      margin-bottom: 10px;
+    }
+
+    .game-status {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 600;
+      margin-bottom: 15px;
+    }
+
+    .status-completed { background: #10b981; color: #fff; }
+    .status-development { background: #3b82f6; color: #fff; }
+    .status-paused { background: #ef4444; color: #fff; }
+    .status-planning { background: #f59e0b; color: #fff; }
+
+    .progress-bar {
+      width: 100%;
+      height: 8px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 4px;
+      overflow: hidden;
+      margin-top: 10px;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #10b981, #3b82f6);
+      transition: width 0.3s;
+    }
+
+    .progress-text {
+      font-size: 12px;
+      margin-top: 5px;
+      opacity: 0.8;
+    }
+
+    /* Modal */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.7);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      padding: 20px;
+    }
+
+    .modal {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      border-radius: 20px;
+      max-width: 700px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .modal-header {
+      padding: 30px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .modal-header h2 {
+      font-size: 2rem;
+      margin-bottom: 10px;
+    }
+
+    .modal-body {
+      padding: 30px;
+    }
+
+    .modal-image {
+      width: 100%;
+      height: 300px;
+      object-fit: cover;
+      border-radius: 10px;
+      margin-bottom: 20px;
+    }
+
+    .detail-group {
+      margin-bottom: 20px;
+    }
+
+    .detail-group h3 {
+      font-size: 14px;
+      opacity: 0.8;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .detail-group p {
+      font-size: 16px;
+      line-height: 1.6;
+    }
+
+    .tech-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .tech-tag {
+      background: rgba(255, 255, 255, 0.2);
+      padding: 6px 15px;
+      border-radius: 20px;
+      font-size: 14px;
+    }
+
+    .modal-links {
+      display: flex;
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    .link-btn {
+      flex: 1;
+      padding: 12px;
+      background: rgba(255, 255, 255, 0.2);
+      border: none;
+      border-radius: 8px;
+      color: #fff;
+      text-decoration: none;
+      text-align: center;
+      font-weight: 600;
+      transition: all 0.3s;
+      cursor: pointer;
+    }
+
+    .link-btn:hover {
+      background: rgba(255, 255, 255, 0.3);
+      transform: translateY(-2px);
+    }
+
+    .close-modal {
+      margin-top: 20px;
+      width: 100%;
+      padding: 12px;
+      background: rgba(239, 68, 68, 0.3);
+      border: 1px solid rgba(239, 68, 68, 0.5);
+      color: #fff;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s;
+    }
+
+    .close-modal:hover {
+      background: rgba(239, 68, 68, 0.5);
+    }
+
+    /* Loading */
+    .loading {
+      text-align: center;
+      padding: 50px;
+      font-size: 1.5rem;
+    }
+
+    /* Empty State */
+    .empty-state {
+      text-align: center;
+      padding: 60px 20px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 15px;
+      margin-top: 40px;
+    }
+
+    .empty-state h2 {
+      font-size: 2rem;
+      margin-bottom: 10px;
+    }
+
+    .empty-state p {
+      opacity: 0.8;
+    }
+
+    @media (max-width: 768px) {
+      .games-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .stats-bar {
+        grid-template-columns: 1fr;
+      }
+
+      .header {
+        flex-direction: column;
+        gap: 15px;
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { useState, useEffect } = React;
+
+    const API_URL = 'http://localhost:3001/api';
+
+    function App() {
+      const [isAuthenticated, setIsAuthenticated] = useState(false);
+      const [token, setToken] = useState(null);
+      const [username, setUsername] = useState('');
+      const [games, setGames] = useState([]);
+      const [selectedGame, setSelectedGame] = useState(null);
+      const [loading, setLoading] = useState(false);
+      const [error, setError] = useState('');
+
+      useEffect(() => {
+        const savedToken = localStorage.getItem('token');
+        const savedUsername = localStorage.getItem('username');
+        if (savedToken) {
+          setToken(savedToken);
+          setUsername(savedUsername);
+          setIsAuthenticated(true);
+        }
+      }, []);
+
+      useEffect(() => {
+        if (isAuthenticated) {
+          fetchGames();
+        }
+      }, [isAuthenticated]);
+
+      const handleLogin = async (e) => {
+        e.preventDefault();
+        setError('');
+        setLoading(true);
+
+        const formData = new FormData(e.target);
+        const credentials = {
+          username: formData.get('username'),
+          password: formData.get('password')
+        };
+
+        try {
+          const response = await fetch(`${API_URL}/login`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(credentials)
+          });
+
+          const data = await response.json();
+
+          if (response.ok) {
+            localStorage.setItem('token', data.token);
+            localStorage.setItem('username', data.username);
+            setToken(data.token);
+            setUsername(data.username);
+            setIsAuthenticated(true);
+          } else {
+            setError(data.error || 'Erro ao fazer login');
+          }
+        } catch (err) {
+          setError('Erro de conexão com o servidor');
+        } finally {
+          setLoading(false);
+        }
+      };
+
+      const handleLogout = () => {
+        localStorage.removeItem('token');
+        localStorage.removeItem('username');
+        setToken(null);
+        setUsername('');
+        setIsAuthenticated(false);
+        setGames([]);
+      };
+
+      const fetchGames = async () => {
+        setLoading(true);
+        try {
+          const response = await fetch(`${API_URL}/games`, {
+            headers: {
+              'Authorization': `Bearer ${localStorage.getItem('token')}`
+            }
+          });
+
+          if (response.ok) {
+            const data = await response.json();
+            setGames(data);
+          }
+        } catch (err) {
+          console.error('Erro ao buscar jogos:', err);
+        } finally {
+          setLoading(false);
+        }
+      };
+
+      const getStatusClass = (status) => {
+        const statusMap = {
+          'Concluído': 'status-completed',
+          'Em Desenvolvimento': 'status-development',
+          'Pausado': 'status-paused',
+          'Planejamento': 'status-planning'
+        };
+        return statusMap[status] || 'status-development';
+      };
+
+      const calculateStats = () => {
+        const totalGames = games.length;
+        const completedGames = games.filter(g => g.completion === 100).length;
+        const totalPlayTime = games.reduce((acc, g) => acc + g.play_time, 0);
+        const avgCompletion = games.length > 0 
+          ? Math.round(games.reduce((acc, g) => acc + g.completion, 0) / games.length)
+          : 0;
+
+        return { totalGames, completedGames, totalPlayTime, avgCompletion };
+      };
+
+      if (!isAuthenticated) {
+        return (
+          <div className="login-container">
+            <div className="login-box">
+              <h1>🎮 Game Portfolio</h1>
+              <p>Faça login para acessar seus projetos</p>
+              {error && <div className="error-message">{error}</div>}
+              <form onSubmit={handleLogin}>
+                <div className="form-group">
+                  <label>Usuário</label>
+                  <input 
+                    type="text" 
+                    name="username" 
+                    placeholder="Digite seu usuário" 
+                    required 
+                  />
+                </div>
+                <div className="form-group">
+                  <label>Senha</label>
+                  <input 
+                    type="password" 
+                    name="password" 
+                    placeholder="Digite sua senha" 
+                    required 
+                  />
+                </div>
+                <button type="submit" className="btn btn-primary" disabled={loading}>
+                  {loading ? 'Entrando...' : 'Entrar'}
+                </button>
+              </form>
+              <p style={{marginTop: '20px', fontSize: '14px', textAlign: 'center', opacity: 0.7}}>
+                Login padrão: admin / admin123
+              </p>
+            </div>
+          </div>
+        );
+      }
+
+      const stats = calculateStats();
+
+      return (
+        <div className="container">
+          <div className="header">
+            <h1>🎮 Meus Projetos de Jogos</h1>
+            <div className="header-right">
+              <div className="user-info">👤 {username}</div>
+              <button onClick={handleLogout} className="btn-secondary">Sair</button>
+            </div>
+          </div>
+
+          <div className="stats-bar">
+            <div className="stat-card">
+              <h3>Total de Projetos</h3>
+              <p>{stats.totalGames}</p>
+            </div>
+            <div className="stat-card">
+              <h3>Projetos Concluídos</h3>
+              <p>{stats.completedGames}</p>
+            </div>
+            <div className="stat-card">
+              <h3>Tempo Total (horas)</h3>
+              <p>{stats.totalPlayTime}h</p>
+            </div>
+            <div className="stat-card">
+              <h3>Conclusão Média</h3>
+              <p>{stats.avgCompletion}%</p>
+            </div>
+          </div>
+
+          {loading ? (
+            <div className="loading">Carregando projetos...</div>
+          ) : games.length === 0 ? (
+            <div className="empty-state">
+              <h2>Nenhum projeto ainda</h2>
+              <p>Adicione seu primeiro projeto de jogo!</p>
+            </div>
+          ) : (
+            <div className="games-grid">
+              {games.map(game => (
+                <div 
+                  key={game.id} 
+                  className="game-card"
+                  onClick={() => setSelectedGame(game)}
+                >
+                  <img src={game.image_url} alt={game.title} className="game-image" />
+                  <div className="game-content">
+                    <h3 className="game-title">{game.title}</h3>
+                    <span className={`game-status ${getStatusClass(game.status)}`}>
+                      {game.status}
+                    </span>
+                    <div className="progress-bar">
+                      <div 
+                        className="progress-fill" 
+                        style={{width: `${game.completion}%`}}
+                      ></div>
+                    </div>
+                    <div className="progress-text">
+                      {game.completion}% concluído • {game.play_time}h de desenvolvimento
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {selectedGame && (
+            <div className="modal-overlay" onClick={() => setSelectedGame(null)}>
+              <div className="modal" onClick={(e) => e.stopPropagation()}>
+                <div className="modal-header">
+                  <h2>{selectedGame.title}</h2>
+                  <span className={`game-status ${getStatusClass(selectedGame.status)}`}>
+                    {selectedGame.status}
+                  </span>
+                </div>
+                <div className="modal-body">
+                  <img 
+                    src={selectedGame.image_url} 
+                    alt={selectedGame.title} 
+                    className="modal-image" 
+                  />
+                  
+                  <div className="detail-group">
+                    <h3>Descrição</h3>
+                    <p>{selectedGame.description}</p>
+                  </div>
+
+                  <div className="detail-group">
+                    <h3>Progresso</h3>
+                    <div className="progress-bar" style={{height: '12px'}}>
+                      <div 
+                        className="progress-fill" 
+                        style={{width: `${selectedGame.completion}%`}}
+                      ></div>
+                    </div>
+                    <p style={{marginTop: '10px'}}>{selectedGame.completion}% Concluído</p>
+                  </div>
+
+                  <div className="detail-group">
+                    <h3>Tempo de Desenvolvimento</h3>
+                    <p>{selectedGame.play_time} horas</p>
+                  </div>
+
+                  <div className="detail-group">
+                    <h3>Tecnologias</h3>
+                    <div className="tech-tags">
+                      {selectedGame.technologies.split(',').map((tech, idx) => (
+                        <span key={idx} className="tech-tag">{tech.trim()}</span>
+                      ))}
+                    </div>
+                  </div>
+
+                  {(selectedGame.github_url || selectedGame.demo_url) && (
+                    <div className="modal-links">
+                      {selectedGame.github_url && (
+                        <a 
+                          href={selectedGame.github_url} 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                          className="link-btn"
+                        >
+                          📂 GitHub
+                        </a>
+                      )}
+                      {selectedGame.demo_url && (
+                        <a 
+                          href={selectedGame.demo_url} 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                          className="link-btn"
+                        >
+                          🚀 Demo
+                        </a>
+                      )}
+                    </div>
+                  )}
+
+                  <button onClick={() => setSelectedGame(null)} className="close-modal">
+                    Fechar
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+      );
+    }
+
+    ReactDOM.render(<App />, document.getElementById('root'));
+  </script>
+</body>
+</html>

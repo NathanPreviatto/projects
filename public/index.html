@@ -446,7 +446,11 @@
   <script type="text/babel">
     const { useState, useEffect } = React;
 
-    const API_URL = 'http://localhost:3001/api';
+    // API URL - funciona local e em produção
+    const API_URL = window.location.hostname === 'localhost' 
+      ? 'http://localhost:3001/api' 
+      : `${window.location.origin}/api`;
+
 
     function App() {
       const [isAuthenticated, setIsAuthenticated] = useState(false);

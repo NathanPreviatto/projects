@@ -69,7 +69,9 @@
       font-weight: 500;
     }
 
-    .form-group input {
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
       width: 100%;
       padding: 12px;
       border: 1px solid rgba(255, 255, 255, 0.3);
@@ -78,21 +80,34 @@
       color: #fff;
       font-size: 16px;
       transition: all 0.3s;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
 
-    .form-group input:focus {
+    .form-group textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus {
       outline: none;
       border-color: #fff;
       background: rgba(255, 255, 255, 0.15);
     }
 
-    .form-group input::placeholder {
+    .form-group input::placeholder,
+    .form-group textarea::placeholder {
       color: rgba(255, 255, 255, 0.5);
     }
 
+    .form-group select option {
+      background: #764ba2;
+      color: #fff;
+    }
+
     .btn {
-      width: 100%;
-      padding: 12px;
+      padding: 12px 24px;
       border: none;
       border-radius: 8px;
       font-size: 16px;
@@ -104,11 +119,43 @@
     .btn-primary {
       background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
       color: #fff;
+      width: 100%;
     }
 
     .btn-primary:hover {
       transform: translateY(-2px);
       box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    .btn-success {
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      color: #fff;
+    }
+
+    .btn-success:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(16, 185, 129, 0.4);
+    }
+
+    .btn-danger {
+      background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+      color: #fff;
+    }
+
+    .btn-danger:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(239, 68, 68, 0.4);
+    }
+
+    .btn-edit {
+      background: rgba(59, 130, 246, 0.8);
+      color: #fff;
+      padding: 6px 12px;
+      font-size: 14px;
+    }
+
+    .btn-edit:hover {
+      background: rgba(59, 130, 246, 1);
     }
 
     .error-message {
@@ -128,6 +175,8 @@
       align-items: center;
       padding: 20px 0;
       margin-bottom: 30px;
+      flex-wrap: wrap;
+      gap: 15px;
     }
 
     .header h1 {
@@ -216,10 +265,9 @@
       background: rgba(255, 255, 255, 0.1);
       backdrop-filter: blur(10px);
       border-radius: 15px;
-      overflow: hidden;
-      cursor: pointer;
-      transition: all 0.3s;
       border: 1px solid rgba(255, 255, 255, 0.2);
+      position: relative;
+      transition: all 0.3s;
     }
 
     .game-card:hover {
@@ -227,15 +275,9 @@
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
     }
 
-    .game-image {
-      width: 100%;
-      height: 200px;
-      object-fit: cover;
-      background: rgba(255, 255, 255, 0.05);
-    }
-
     .game-content {
       padding: 20px;
+      cursor: pointer;
     }
 
     .game-title {
@@ -278,6 +320,16 @@
       opacity: 0.8;
     }
 
+    .game-actions {
+      padding: 0 20px 20px 20px;
+      display: flex;
+      gap: 10px;
+    }
+
+    .game-actions button {
+      flex: 1;
+    }
+
     /* Modal */
     .modal-overlay {
       position: fixed;
@@ -291,55 +343,48 @@
       align-items: center;
       z-index: 1000;
       padding: 20px;
+      overflow-y: auto;
     }
 
     .modal {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
       border-radius: 20px;
-      max-width: 700px;
+      max-width: 600px;
       width: 100%;
       max-height: 90vh;
       overflow-y: auto;
       box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #333;
+      margin: auto;
     }
 
     .modal-header {
       padding: 30px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
     }
 
     .modal-header h2 {
-      font-size: 2rem;
       margin-bottom: 10px;
+      color: #764ba2;
     }
 
     .modal-body {
       padding: 30px;
     }
 
-    .modal-image {
-      width: 100%;
-      height: 300px;
-      object-fit: cover;
-      border-radius: 10px;
-      margin-bottom: 20px;
-    }
-
     .detail-group {
-      margin-bottom: 20px;
+      margin-bottom: 25px;
     }
 
     .detail-group h3 {
-      font-size: 14px;
-      opacity: 0.8;
-      margin-bottom: 8px;
-      text-transform: uppercase;
-      letter-spacing: 1px;
+      color: #667eea;
+      margin-bottom: 10px;
+      font-size: 1.1rem;
     }
 
     .detail-group p {
-      font-size: 16px;
+      color: #555;
       line-height: 1.6;
     }
 
@@ -350,10 +395,11 @@
     }
 
     .tech-tag {
-      background: rgba(255, 255, 255, 0.2);
-      padding: 6px 15px;
-      border-radius: 20px;
-      font-size: 14px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: #fff;
+      padding: 6px 12px;
+      border-radius: 15px;
+      font-size: 13px;
     }
 
     .modal-links {
@@ -364,59 +410,67 @@
 
     .link-btn {
       flex: 1;
+      text-align: center;
       padding: 12px;
-      background: rgba(255, 255, 255, 0.2);
-      border: none;
-      border-radius: 8px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
       color: #fff;
       text-decoration: none;
-      text-align: center;
+      border-radius: 8px;
       font-weight: 600;
       transition: all 0.3s;
-      cursor: pointer;
     }
 
     .link-btn:hover {
-      background: rgba(255, 255, 255, 0.3);
       transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
     }
 
     .close-modal {
-      margin-top: 20px;
       width: 100%;
       padding: 12px;
-      background: rgba(239, 68, 68, 0.3);
-      border: 1px solid rgba(239, 68, 68, 0.5);
-      color: #fff;
+      background: #e5e7eb;
+      color: #333;
+      border: none;
       border-radius: 8px;
-      cursor: pointer;
       font-weight: 600;
+      cursor: pointer;
+      margin-top: 20px;
       transition: all 0.3s;
     }
 
     .close-modal:hover {
-      background: rgba(239, 68, 68, 0.5);
+      background: #d1d5db;
     }
 
-    /* Loading */
+    .modal-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .modal-actions button {
+      flex: 1;
+    }
+
     .loading {
       text-align: center;
-      padding: 50px;
-      font-size: 1.5rem;
+      padding: 40px;
+      font-size: 1.2rem;
+      opacity: 0.8;
     }
 
-    /* Empty State */
     .empty-state {
       text-align: center;
       padding: 60px 20px;
       background: rgba(255, 255, 255, 0.1);
-      border-radius: 15px;
-      margin-top: 40px;
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
     }
 
     .empty-state h2 {
-      font-size: 2rem;
       margin-bottom: 10px;
+      font-size: 1.8rem;
     }
 
     .empty-state p {
@@ -424,18 +478,21 @@
     }
 
     @media (max-width: 768px) {
+      .header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .header h1 {
+        font-size: 1.5rem;
+      }
+
       .games-grid {
         grid-template-columns: 1fr;
       }
 
       .stats-bar {
-        grid-template-columns: 1fr;
-      }
-
-      .header {
-        flex-direction: column;
-        gap: 15px;
-        align-items: flex-start;
+        grid-template-columns: repeat(2, 1fr);
       }
     }
   </style>
@@ -446,27 +503,28 @@
   <script type="text/babel">
     const { useState, useEffect } = React;
 
-    // API URL - funciona local e em produção
-    const API_URL = window.location.hostname === 'localhost' 
-      ? 'http://localhost:3001/api' 
-      : `${window.location.origin}/api`;
-
-
     function App() {
       const [isAuthenticated, setIsAuthenticated] = useState(false);
       const [token, setToken] = useState(null);
       const [username, setUsername] = useState('');
       const [games, setGames] = useState([]);
       const [selectedGame, setSelectedGame] = useState(null);
+      const [showForm, setShowForm] = useState(false);
+      const [editingGame, setEditingGame] = useState(null);
       const [loading, setLoading] = useState(false);
       const [error, setError] = useState('');
 
+      const API_URL = window.location.hostname === 'localhost' 
+        ? 'http://localhost:3001/api'
+        : '/api';
+
       useEffect(() => {
-        const savedToken = localStorage.getItem('token');
-        const savedUsername = localStorage.getItem('username');
-        if (savedToken) {
-          setToken(savedToken);
-          setUsername(savedUsername);
+        const storedToken = localStorage.getItem('token');
+        const storedUsername = localStorage.getItem('username');
+        
+        if (storedToken) {
+          setToken(storedToken);
+          setUsername(storedUsername);
           setIsAuthenticated(true);
         }
       }, []);
@@ -542,6 +600,99 @@
         }
       };
 
+      const handleSubmitGame = async (e) => {
+        e.preventDefault();
+        setLoading(true);
+        setError('');
+
+        const formData = new FormData(e.target);
+        const gameData = {
+          title: formData.get('title'),
+          description: formData.get('description'),
+          status: formData.get('status'),
+          completion: parseInt(formData.get('completion')),
+          play_time: parseInt(formData.get('play_time')),
+          technologies: formData.get('technologies'),
+          image_url: 'https://via.placeholder.com/400x300/667eea/ffffff?text=' + encodeURIComponent(formData.get('title')),
+          github_url: formData.get('github_url') || '',
+          demo_url: formData.get('demo_url') || ''
+        };
+
+        try {
+          const url = editingGame 
+            ? `${API_URL}/games/${editingGame.id}`
+            : `${API_URL}/games`;
+          
+          const method = editingGame ? 'PUT' : 'POST';
+
+          const response = await fetch(url, {
+            method,
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${localStorage.getItem('token')}`
+            },
+            body: JSON.stringify(gameData)
+          });
+
+          if (response.ok) {
+            await fetchGames();
+            setShowForm(false);
+            setEditingGame(null);
+            e.target.reset();
+          } else {
+            const data = await response.json();
+            setError(data.error || 'Erro ao salvar projeto');
+          }
+        } catch (err) {
+          setError('Erro de conexão com o servidor');
+        } finally {
+          setLoading(false);
+        }
+      };
+
+      const handleDeleteGame = async (gameId) => {
+        if (!confirm('Tem certeza que deseja deletar este projeto?')) {
+          return;
+        }
+
+        setLoading(true);
+        try {
+          const response = await fetch(`${API_URL}/games/${gameId}`, {
+            method: 'DELETE',
+            headers: {
+              'Authorization': `Bearer ${localStorage.getItem('token')}`
+            }
+          });
+
+          if (response.ok) {
+            await fetchGames();
+            setSelectedGame(null);
+          } else {
+            alert('Erro ao deletar projeto');
+          }
+        } catch (err) {
+          alert('Erro de conexão com o servidor');
+        } finally {
+          setLoading(false);
+        }
+      };
+
+      const openEditForm = (game) => {
+        setEditingGame(game);
+        setShowForm(true);
+      };
+
+      const openNewForm = () => {
+        setEditingGame(null);
+        setShowForm(true);
+      };
+
+      const closeForm = () => {
+        setShowForm(false);
+        setEditingGame(null);
+        setError('');
+      };
+
       const getStatusClass = (status) => {
         const statusMap = {
           'Concluído': 'status-completed',
@@ -608,6 +759,7 @@
           <div className="header">
             <h1>🎮 Meus Projetos de Jogos</h1>
             <div className="header-right">
+              <button onClick={openNewForm} className="btn-add">+ Novo Projeto</button>
               <div className="user-info">👤 {username}</div>
               <button onClick={handleLogout} className="btn-secondary">Sair</button>
             </div>
@@ -632,7 +784,7 @@
             </div>
           </div>
 
-          {loading ? (
+          {loading && !showForm ? (
             <div className="loading">Carregando projetos...</div>
           ) : games.length === 0 ? (
             <div className="empty-state">
@@ -642,13 +794,11 @@
           ) : (
             <div className="games-grid">
               {games.map(game => (
-                <div 
-                  key={game.id} 
-                  className="game-card"
-                  onClick={() => setSelectedGame(game)}
-                >
-                  <img src={game.image_url} alt={game.title} className="game-image" />
-                  <div className="game-content">
+                <div key={game.id} className="game-card">
+                  <div 
+                    className="game-content"
+                    onClick={() => setSelectedGame(game)}
+                  >
                     <h3 className="game-title">{game.title}</h3>
                     <span className={`game-status ${getStatusClass(game.status)}`}>
                       {game.status}
@@ -663,12 +813,33 @@
                       {game.completion}% concluído • {game.play_time}h de desenvolvimento
                     </div>
                   </div>
+                  <div className="game-actions">
+                    <button 
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        openEditForm(game);
+                      }}
+                      className="btn btn-edit"
+                    >
+                      ✏️ Editar
+                    </button>
+                    <button 
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleDeleteGame(game.id);
+                      }}
+                      className="btn btn-danger"
+                    >
+                      🗑️ Deletar
+                    </button>
+                  </div>
                 </div>
               ))}
             </div>
           )}
 
-          {selectedGame && (
+          {/* Modal de Detalhes */}
+          {selectedGame && !showForm && (
             <div className="modal-overlay" onClick={() => setSelectedGame(null)}>
               <div className="modal" onClick={(e) => e.stopPropagation()}>
                 <div className="modal-header">
@@ -678,12 +849,6 @@
                   </span>
                 </div>
                 <div className="modal-body">
-                  <img 
-                    src={selectedGame.image_url} 
-                    alt={selectedGame.title} 
-                    className="modal-image" 
-                  />
-                  
                   <div className="detail-group">
                     <h3>Descrição</h3>
                     <p>{selectedGame.description}</p>
@@ -739,9 +904,142 @@
                     </div>
                   )}
 
+                  <div className="modal-actions">
+                    <button 
+                      onClick={() => {
+                        openEditForm(selectedGame);
+                        setSelectedGame(null);
+                      }}
+                      className="btn btn-edit"
+                    >
+                      ✏️ Editar
+                    </button>
+                    <button 
+                      onClick={() => handleDeleteGame(selectedGame.id)}
+                      className="btn btn-danger"
+                    >
+                      🗑️ Deletar
+                    </button>
+                  </div>
+
                   <button onClick={() => setSelectedGame(null)} className="close-modal">
                     Fechar
                   </button>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Modal de Formulário */}
+          {showForm && (
+            <div className="modal-overlay" onClick={closeForm}>
+              <div className="modal" onClick={(e) => e.stopPropagation()}>
+                <div className="modal-header">
+                  <h2>{editingGame ? '✏️ Editar Projeto' : '➕ Novo Projeto'}</h2>
+                </div>
+                <div className="modal-body">
+                  {error && <div className="error-message">{error}</div>}
+                  <form onSubmit={handleSubmitGame}>
+                    <div className="form-group">
+                      <label>Título *</label>
+                      <input 
+                        type="text" 
+                        name="title" 
+                        placeholder="Nome do projeto"
+                        defaultValue={editingGame?.title || ''}
+                        required 
+                      />
+                    </div>
+
+                    <div className="form-group">
+                      <label>Descrição *</label>
+                      <textarea 
+                        name="description" 
+                        placeholder="Descreva seu projeto"
+                        defaultValue={editingGame?.description || ''}
+                        required
+                      />
+                    </div>
+
+                    <div className="form-group">
+                      <label>Status *</label>
+                      <select 
+                        name="status"
+                        defaultValue={editingGame?.status || 'Planejamento'}
+                        required
+                      >
+                        <option value="Planejamento">Planejamento</option>
+                        <option value="Em Desenvolvimento">Em Desenvolvimento</option>
+                        <option value="Pausado">Pausado</option>
+                        <option value="Concluído">Concluído</option>
+                      </select>
+                    </div>
+
+                    <div className="form-group">
+                      <label>Conclusão (%) *</label>
+                      <input 
+                        type="number" 
+                        name="completion" 
+                        placeholder="0-100"
+                        min="0"
+                        max="100"
+                        defaultValue={editingGame?.completion || 0}
+                        required 
+                      />
+                    </div>
+
+                    <div className="form-group">
+                      <label>Tempo de Desenvolvimento (horas) *</label>
+                      <input 
+                        type="number" 
+                        name="play_time" 
+                        placeholder="Horas dedicadas"
+                        min="0"
+                        defaultValue={editingGame?.play_time || 0}
+                        required 
+                      />
+                    </div>
+
+                    <div className="form-group">
+                      <label>Tecnologias *</label>
+                      <input 
+                        type="text" 
+                        name="technologies" 
+                        placeholder="Ex: React, Node.js, MongoDB (separado por vírgulas)"
+                        defaultValue={editingGame?.technologies || ''}
+                        required 
+                      />
+                    </div>
+
+                    <div className="form-group">
+                      <label>Link GitHub</label>
+                      <input 
+                        type="url" 
+                        name="github_url" 
+                        placeholder="https://github.com/seu-usuario/projeto"
+                        defaultValue={editingGame?.github_url || ''}
+                      />
+                    </div>
+
+                    <div className="form-group">
+                      <label>Link Demo</label>
+                      <input 
+                        type="url" 
+                        name="demo_url" 
+                        placeholder="https://seu-projeto.com"
+                        defaultValue={editingGame?.demo_url || ''}
+                      />
+                    </div>
+
+                    <div className="modal-actions">
+                      <button type="button" onClick={closeForm} className="btn btn-secondary">
+                        Cancelar
+                      </button>
+                      <button type="submit" className="btn btn-success" disabled={loading}>
+                        {loading ? 'Salvando...' : (editingGame ? 'Salvar Alterações' : 'Criar Projeto')}
+                      </button>
+                    </div>
+                  </form>
                 </div>
               </div>
             </div>
